@@ -25,11 +25,13 @@ class CreateNilaisTable extends Migration
 
             $table->foreign('NIM')
                 ->references('NIM')
-                ->on('mahasiswas');
+                ->on('mahasiswas')
+                ->onUpdate('cascade');
             
             $table->foreign('tahun_ajaran')
                 ->references('nama')
-                ->on('tahun_ajarans');
+                ->on('tahun_ajarans')
+                ->onUpdate('cascade');
 
             $table->timestamps();
         });
