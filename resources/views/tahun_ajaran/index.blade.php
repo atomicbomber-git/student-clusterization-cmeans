@@ -34,9 +34,6 @@
             </div>
 
             <div class="card-content">
-                <div id="app" class="content">
-                    <tahun-ajaran-table></tahun-ajaran-table>
-                </div>
             </div>
         </div>
         

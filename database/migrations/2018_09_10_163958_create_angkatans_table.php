@@ -14,8 +14,8 @@ class CreateAngkatansTable extends Migration
     public function up()
     {
         Schema::create('angkatans', function (Blueprint $table) {
-            $table->integer('tahun')->unsigned();
-            $table->primary('tahun');
+            $table->increments('id');
+            $table->integer('tahun')->unsigned()->unique();
             $table->timestamps();
         });
     }

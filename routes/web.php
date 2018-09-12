@@ -12,15 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
 });
 
 Route::prefix('/tahun_ajaran')->group(function() {
     Route::get('/index', 'TahunAjaranController@index')->name('tahun_ajaran.index');
-
-    Route::prefix('/api')->group(function() {
-        Route::get('/index', 'TahunAjaranApiController@index')->name('tahun_ajaran.api.index');
-        Route::post('/create', 'TahunAjaranApiController@create')->name('tahun_ajaran.api.create');
-        Route::post('/delete', 'TahunAjaranApiController@delete')->name('tahun_ajaran.api.delete');
-    });
 });

@@ -13,12 +13,12 @@ class MahasiswaSeeder extends Seeder
      */
     public function run()
     {
-        $angkatans = Angkatan::select('tahun')
-            ->pluck('tahun');
+        $angkatan_ids = Angkatan::select('id')
+            ->pluck('id');
 
-        foreach ($angkatans as $angkatan) {
+        foreach ($angkatan_ids as $angkatan_id) {
             factory(Mahasiswa::class, 40)
-                ->create(['angkatan' => $angkatan]);
+                ->create(['angkatan_id' => $angkatan_id]);
         }
     }
 }

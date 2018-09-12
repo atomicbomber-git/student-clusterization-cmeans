@@ -14,9 +14,9 @@ class AddAngkatanIdToMahasiswas extends Migration
     public function up()
     {
         Schema::table('mahasiswas', function (Blueprint $table) {
-            $table->integer('angkatan')->unsigned();
-            $table->foreign('angkatan')
-                ->references('tahun')
+            $table->integer('angkatan_id')->unsigned();
+            $table->foreign('angkatan_id')
+                ->references('id')
                 ->on('angkatans');
         });
     }
