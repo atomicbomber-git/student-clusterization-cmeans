@@ -22,3 +22,11 @@ Route::group(['prefix' => '/tahun_ajaran', 'as' => 'tahun_ajaran.'], function() 
     Route::get('/edit/{tahun_ajaran}', 'TahunAjaranController@edit')->name('edit');
     Route::post('/update/{tahun_ajaran}', 'TahunAjaranController@update')->name('update');
 });
+
+Route::group(['prefix' => '/angkatan', 'as' => 'angkatan.'], function() {
+    Route::get('/index', 'AngkatanController@index')->name('index');
+    Route::post('/create', 'AngkatanController@create')->name('create');
+    Route::delete('/delete/{angkatan}', 'AngkatanController@delete')->name('delete');
+    Route::get('/edit/{angkatan}', 'AngkatanController@edit')->name('edit');
+    Route::post('/update/{angkatan}', 'AngkatanController@update')->name('update');
+});

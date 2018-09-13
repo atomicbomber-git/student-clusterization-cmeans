@@ -6,7 +6,7 @@
             </li>
 
             <li class="{{ Route::is("angkatan.*") ? 'is-active' : '' }}">
-                <a href="#"> Angkatan </a>
+                <a href="{{ route('angkatan.index') }}"> Angkatan </a>
             </li>
             
             <li class="{{ Route::is("mahasiswa.*") ? 'is-active' : '' }}">
