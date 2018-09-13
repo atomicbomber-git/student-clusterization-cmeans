@@ -98,19 +98,19 @@
                             <tr>
                                 <td> {{ $mahasiswas->firstItem() + $loop->index }}. </td>
                                 <td> {{ $mahasiswa->NIM }} </td>
-                                <td> {{ $mahasiswa->angkatan->tahun }} </td>
+                                <td> {{ $mahasiswa->angkatan }} </td>
                                 <td>
-                                    <form method="POST" class="is-inline-block" action="{{ route('mahasiswa.delete', $mahasiswa) }}">
+                                    <form method="POST" class="is-inline-block" action="{{ route('mahasiswa.delete', $mahasiswa->id) }}">
                                         @csrf
                                         {{ method_field('DELETE') }}
-                                        <button {{ $mahasiswa->nilais_count > 0 ? 'disabled' : '' }} class="button is-danger">
+                                        <button {{ $mahasiswa_nilai_counts->get($mahasiswa->id) > 0 ? 'disabled' : '' }} class="button is-danger">
                                             <span class="icon">
                                                 <i class="fa fa-trash"></i>
                                             </span>
                                         </button>
                                     </form>
 
-                                    <a href="{{ route('mahasiswa.edit', $mahasiswa) }}" class="button is-dark">
+                                    <a href="{{ route('mahasiswa.edit', $mahasiswa->id) }}" class="button is-dark">
                                         <span class="icon">
                                             <i class="fa fa-pencil"></i>
                                         </span>

@@ -16,21 +16,23 @@ class NilaiSeeder extends Seeder
     {
         $ganjil_genap = ['GANJIL', 'GENAP'];
 
-        $tahun_ajaran_ids = TahunAjaran::select('id')
-            ->pluck('id');
+        $tahun_ajarans = TahunAjaran::select('id', 'tahun_mulai')
+            ->get();
 
-        $mahasiswa_ids = Mahasiswa::select('id')
-            ->pluck('id');
+        $mahasiswas = Mahasiswa::select('id', 'angkatan_id')
+            ->with('angkatan:id,tahun')
+            ->get();
 
-        foreach ($tahun_ajaran_ids as $tahun_ajaran_id) {
+        foreach ($tahun_ajarans as $tahun_ajaran) {
             foreach ($ganjil_genap as $gg) {
-                foreach ($mahasiswa_ids as $mahasiswa_id) {
-                    $test = factory(Nilai::class)->create([
-                        'mahasiswa_id' => $mahasiswa_id,
-                        'ganjil_genap' => $gg,
-                        'tahun_ajaran_id' => $tahun_ajaran_id
-                    ]);
-                    
+                foreach ($mahasiswas as $mahasiswa) {
+                    if ($mahasiswa->angkatan->tahun <= $tahun_ajaran->tahun_mulai) {
+                        $test = factory(Nilai::class)->create([
+                            'mahasiswa_id' => $mahasiswa->id,
+                            'ganjil_genap' => $gg,
+                            'tahun_ajaran_id' => $tahun_ajaran->id
+                        ]);
+                    }
                 }
             }
         }

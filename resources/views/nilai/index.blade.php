@@ -9,6 +9,12 @@
 
 <div class="section">
     <div class="container">
+            <nav class="breadcrumb box" aria-label="breadcrumbs">
+                <ul>
+                    <li class="is-active"> <a> Kelola Nilai </a> </li>
+                </ul>
+            </nav>
+
         <div class="card is-inline-block">
             <div class="card-header">
                 <h1 class="card-header-title">
@@ -37,20 +43,18 @@
                         @foreach ($tahun_ajarans as $tahun_ajaran)
                         <tr>
                             <td> {{ $tahun_ajaran->tahun_mulai . '-' . $tahun_ajaran->tahun_selesai }} </td>
+
+                            @foreach ($ganjil_genap as $gg)
                             <td>
                                 @foreach ($angkatans as $angkatan)
-                                <button class="button is-dark is-small">
-                                    A. {{ $angkatan->tahun }}
-                                </button>
+                                    @if ($angkatan->tahun <= $tahun_ajaran->tahun_mulai)
+                                    <a href="{{ route('nilai.detail.index', [$tahun_ajaran, $gg, $angkatan]) }}" class="button is-dark is-small">
+                                        A. {{ $angkatan->tahun }}
+                                    </a>
+                                    @endif
                                 @endforeach
                             </td>
-                            <td>
-                                @foreach ($angkatans as $angkatan)
-                                <button class="button is-dark is-small">
-                                    A. {{ $angkatan->tahun }}
-                                </button>
-                                @endforeach
-                            </td>
+                            @endforeach
                         </tr>
                         @endforeach
                     </tbody>

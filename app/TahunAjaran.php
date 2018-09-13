@@ -15,4 +15,9 @@ class TahunAjaran extends Model
     {
         return $this->hasMany(Nilai::class);
     }
+
+    public function nama()
+    {
+        return $this->tahun_mulai . '-' . $this->tahun_selesai;
+    }
 }

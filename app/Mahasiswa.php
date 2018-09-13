@@ -19,4 +19,9 @@ class Mahasiswa extends Model
     {
         return $this->hasMany(Nilai::class);
     }
+
+    public function nilai()
+    {
+        return $this->hasOne(Nilai::class);
+    }
 }

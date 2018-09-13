@@ -20,8 +20,9 @@ class CreateNilaisTable extends Migration
             $table->enum('ganjil_genap', ['GENAP', 'GANJIL']);
             $table->integer('tahun_ajaran_id')->unsigned();
 
-            $table->decimal('IPK', 5, 2);
-            $table->decimal('IPS', 5, 2);
+            $table->decimal('IPK', 5, 2)->nullable();
+            $table->decimal('IPS', 5, 2)->nullable();
+            $table->integer('cluster')->unsigned()->nullable();
 
             $table->foreign('mahasiswa_id')
                 ->references('id')

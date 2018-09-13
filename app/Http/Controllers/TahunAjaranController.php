@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\TahunAjaran;
+use App\Mahasiswa;
+use App\Nilai;
 
 class TahunAjaranController extends Controller
 {
@@ -34,7 +37,25 @@ class TahunAjaranController extends Controller
             ]
         ]);
 
-        TahunAjaran::create($data);
+        DB::transaction(function () use($data) {
+            $tahun_ajaran = TahunAjaran::create($data);
+
+            $mahasiswa_ids = DB::table('mahasiswas')
+                ->select('mahasiswas.id')
+                ->join('angkatans', 'angkatans.id', '=', 'mahasiswas.angkatan_id')
+                ->where('angkatans.tahun', '<=', $tahun_ajaran->tahun_mulai)
+                ->pluck('id');
+
+            foreach ($mahasiswa_ids as $mahasiswa_id) {
+                foreach (Nilai::ganjil_genap() as $ganjil_genap) {
+                    Nilai::create([
+                        'mahasiswa_id' => $mahasiswa_id,
+                        'tahun_ajaran_id' => $tahun_ajaran->id,
+                        'ganjil_genap' => $ganjil_genap
+                    ]);
+                }
+            }
+        });
 
         return redirect()
             ->back()

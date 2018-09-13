@@ -41,4 +41,9 @@ Route::group(['prefix' => '/mahasiswa', 'as' => 'mahasiswa.'], function() {
 
 Route::group(['prefix' => '/nilai', 'as' => 'nilai.'], function() {
     Route::get('/index', 'NilaiController@index')->name('index');
+
+    $nilai_detail_prefix = '/detail/{tahun_ajaran}/{ganjil_genap}/{angkatan}';
+    Route::group(['prefix' => $nilai_detail_prefix, 'as' => 'detail.'], function() {
+        Route::get('/index', 'NilaiDetailController@index')->name('index');
+    });
 });
