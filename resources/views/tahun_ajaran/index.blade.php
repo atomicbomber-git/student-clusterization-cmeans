@@ -40,7 +40,7 @@
 
                         <div class="field">
                             <label for="tahun_mulai" class="label"> Tahun Mulai: </label>
-                            <input value="{{ old('tahun_mulai') }}" type="text" name="tahun_mulai" class="input {{ $errors->first("tahun_mulai", "is-danger") }}">
+                            <input value="{{ old('tahun_mulai') }}" type="number" name="tahun_mulai" class="input {{ $errors->first("tahun_mulai", "is-danger") }}">
                             @if($errors->has("tahun_mulai"))
                             <p class="help is-danger"> {{ $errors->first("tahun_mulai") }} </p>
                             @endif
@@ -48,7 +48,7 @@
 
                         <div class="field">
                             <label for="tahun_selesai" class="label"> Tahun Selesai: </label>
-                            <input value="{{ old('tahun_selesai') }}" type="text" name="tahun_selesai" class="input {{ $errors->first("tahun_selesai", "is-danger") }}">
+                            <input value="{{ old('tahun_selesai') }}" type="number" name="tahun_selesai" class="input {{ $errors->first("tahun_selesai", "is-danger") }}">
                             @if($errors->has("tahun_selesai"))
                             <p class="help is-danger"> {{ $errors->first("tahun_selesai") }} </p>
                             @endif
