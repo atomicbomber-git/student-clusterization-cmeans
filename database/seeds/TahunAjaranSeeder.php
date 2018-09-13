@@ -16,8 +16,10 @@ class TahunAjaranSeeder extends Seeder
         $end_year = 2018;
 
         for ($i = $start_year; $i <= $end_year; ++$i) {
-            $next_year = $i + 1;
-            TahunAjaran::create(['nama' => $i . "-" . $next_year]);
+            TahunAjaran::create([
+                'tahun_mulai' => $i,
+                'tahun_selesai' => $i + 1
+            ]);
         }
     }
 }

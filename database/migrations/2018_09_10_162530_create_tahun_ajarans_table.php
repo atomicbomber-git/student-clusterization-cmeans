@@ -15,7 +15,9 @@ class CreateTahunAjaransTable extends Migration
     {
         Schema::create('tahun_ajarans', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama')->unique();
+            $table->integer('tahun_mulai')->unsigned();
+            $table->integer('tahun_selesai')->unsigned();
+            $table->unique(['tahun_mulai', 'tahun_selesai']);
             $table->timestamps();
         });
     }
