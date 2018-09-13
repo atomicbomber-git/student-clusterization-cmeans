@@ -45,5 +45,6 @@ Route::group(['prefix' => '/nilai', 'as' => 'nilai.'], function() {
     $nilai_detail_prefix = '/detail/{tahun_ajaran}/{ganjil_genap}/{angkatan}';
     Route::group(['prefix' => $nilai_detail_prefix, 'as' => 'detail.'], function() {
         Route::get('/index', 'NilaiDetailController@index')->name('index');
+        Route::post('/update', 'NilaiDetailController@update')->name('update');
     });
 });
