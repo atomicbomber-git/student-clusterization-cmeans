@@ -30,3 +30,11 @@ Route::group(['prefix' => '/angkatan', 'as' => 'angkatan.'], function() {
     Route::get('/edit/{angkatan}', 'AngkatanController@edit')->name('edit');
     Route::post('/update/{angkatan}', 'AngkatanController@update')->name('update');
 });
+
+Route::group(['prefix' => '/mahasiswa', 'as' => 'mahasiswa.'], function() {
+    Route::get('/index', 'MahasiswaController@index')->name('index');
+    Route::post('/create', 'MahasiswaController@create')->name('create');
+    Route::delete('/delete/{mahasiswa}', 'MahasiswaController@delete')->name('delete');
+    Route::get('/edit/{mahasiswa}', 'MahasiswaController@edit')->name('edit');
+    Route::post('/update/{mahasiswa}', 'MahasiswaController@update')->name('update');
+});
