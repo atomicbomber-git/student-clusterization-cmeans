@@ -38,3 +38,7 @@ Route::group(['prefix' => '/mahasiswa', 'as' => 'mahasiswa.'], function() {
     Route::get('/edit/{mahasiswa}', 'MahasiswaController@edit')->name('edit');
     Route::post('/update/{mahasiswa}', 'MahasiswaController@update')->name('update');
 });
+
+Route::group(['prefix' => '/nilai', 'as' => 'nilai.'], function() {
+    Route::get('/index', 'NilaiController@index')->name('index');
+});

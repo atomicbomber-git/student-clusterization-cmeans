@@ -14,7 +14,7 @@
             </li>
             
             <li class="{{ Route::is("nilai.*") ? 'is-active' : '' }}">
-                <a href="#"> Nilai </a>
+                <a href="{{ route("nilai.index") }}"> Nilai </a>
             </li>
         </ul>
     </div>
