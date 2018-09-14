@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    // return view('welcome');
-});
+Route::redirect('/', '/tahun_ajaran/index');
 
 Route::group(['prefix' => '/tahun_ajaran', 'as' => 'tahun_ajaran.'], function() {
     Route::get('/index', 'TahunAjaranController@index')->name('index');
@@ -46,5 +44,6 @@ Route::group(['prefix' => '/nilai', 'as' => 'nilai.'], function() {
     Route::group(['prefix' => $nilai_detail_prefix, 'as' => 'detail.'], function() {
         Route::get('/index', 'NilaiDetailController@index')->name('index');
         Route::post('/update', 'NilaiDetailController@update')->name('update');
+        Route::post('/clusterize', 'NilaiDetailController@clusterize')->name('clusterize');
     });
 });

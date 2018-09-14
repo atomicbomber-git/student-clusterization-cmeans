@@ -46,10 +46,10 @@
                         <thead>
                             <tr>
                                 <th> # </th>
-                                <th> NIM </th>
-                                <th> IPK </th>
-                                <th> IPS </th>
-                                <th> Kluster </th>
+                                <th> <a href="{{ $sortable_url('NIM') }}"> NIM </a></th>
+                                <th> <a href="{{ $sortable_url('IPK') }}"> IPK </a> </th>
+                                <th> <a href="{{ $sortable_url('IPS') }}"> IPS </a> </th>
+                                <th> <a href="{{ $sortable_url('cluster') }}"> Cluster </a> </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,42 +59,76 @@
                                 <td> {{ $mahasiswa->NIM }} </td>
                                 <td>
                                     <input 
-                                        name="nilais[{{$mahasiswa->nilai->id}}][IPK]"
+                                        name="nilais[{{$mahasiswa->nilai_id}}][IPK]"
                                         style="width: 5rem" type="number" 
-                                        value="{{ old('nilais.'.$mahasiswa->nilai->id.'.IPK', $mahasiswa->nilai->IPK) }}"
-                                        class="input is-small {{ $errors->has('nilais.'.$mahasiswa->nilai->id.'.IPK') ? 'is-danger' : '' }}">
-                                    @if($errors->has('nilais.'.$mahasiswa->nilai->id.'.IPK'))
+                                        step="0.01"
+                                        value="{{ old('nilais.'.$mahasiswa->nilai_id.'.IPK', $mahasiswa->IPK) }}"
+                                        class="input is-small {{ $errors->has('nilais.'.$mahasiswa->nilai_id.'.IPK') ? 'is-danger' : '' }}">
+                                    @if($errors->has('nilais.'.$mahasiswa->nilai_id.'.IPK'))
                                     <p class="help is-danger">
-                                        {{ $errors->first('nilais.'.$mahasiswa->nilai->id.'.IPK') }}
+                                        {{ $errors->first('nilais.'.$mahasiswa->nilai_id.'.IPK') }}
                                     </p>
                                     @endif
                                 </td>
                                 <td>
                                     <input 
-                                        name="nilais[{{$mahasiswa->nilai->id}}][IPS]"
-                                        style="width: 5rem" type="number" 
-                                        value="{{ old('nilais.'.$mahasiswa->nilai->id.'.IPS', $mahasiswa->nilai->IPS) }}"
-                                        class="input is-small {{ $errors->has('nilais.'.$mahasiswa->nilai->id.'.IPS') ? 'is-danger' : '' }}">
-                                    @if($errors->has('nilais.'.$mahasiswa->nilai->id.'.IPS'))
+                                        name="nilais[{{$mahasiswa->nilai_id}}][IPS]"
+                                        style="width: 5rem" type="number"
+                                        step="0.01"
+                                        value="{{ old('nilais.'.$mahasiswa->nilai_id.'.IPS', $mahasiswa->IPS) }}"
+                                        class="input is-small {{ $errors->has('nilais.'.$mahasiswa->nilai_id.'.IPS') ? 'is-danger' : '' }}">
+                                    @if($errors->has('nilais.'.$mahasiswa->nilai_id.'.IPS'))
                                     <p class="help is-danger">
-                                        {{ $errors->first('nilais.'.$mahasiswa->nilai->id.'.IPS') }}
+                                        {{ $errors->first('nilais.'.$mahasiswa->nilai_id.'.IPS') }}
                                     </p>
                                     @endif
                                 </td>
-                                <td> {{ $mahasiswa->nilai->cluster ?? '-' }} </td>
+                                <td> {{ $mahasiswa->cluster ?? '-' }} </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
 
-                    <div class="field has-text-right">
-                        <button class="button is-primary">
-                            <span> Perbarui Nilai </span>
-                            <span>
-                                <i class="fa fa-check"></i>
-                            </span>
-                        </button>
+                    <div class="level">
+                        <div class="level-left">
+                            <div class="level-item">
+                                <div class="field">
+                                    <button class="button is-primary">
+                                        <span> Perbarui Data Nilai </span>
+                                        <span class="icon">
+                                            <i class="fa fa-check"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="level-right ml-10">
+                            <div class="level-item">
+                                <div class="field has-addons">
+                                    <div class="control">
+                                        <input placeholder="Jumlah cluster" form="clusterize" value="{{ old('n_clusters') }}" type="number" name="n_clusters" class="input {{ $errors->first("n_clusters", "is-danger") }}">
+                                        @if($errors->has("n_clusters"))
+                                        <p class="help is-danger"> {{ $errors->first("n_clusters") }} </p>
+                                        @endif
+                                    </div>
+        
+                                    <div class="control">
+                                        <button form="clusterize" class="button is-info">
+                                            <span> Kelompokkan Kedalam Kluster </span>
+                                            <span class="icon">
+                                                <i class="fa fa-cog"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </form>
+
+                <form id="clusterize" method="POST" action="{{ route('nilai.detail.clusterize', [$tahun_ajaran, $ganjil_genap, $angkatan]) }}">
+                    @csrf
                 </form>
             </div>
         </div>

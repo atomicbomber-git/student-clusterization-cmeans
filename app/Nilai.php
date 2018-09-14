@@ -8,7 +8,7 @@ class Nilai extends Model
 {
     public $fillable = [
         'mahasiswa_id', 'tahun_ajaran_id', 'ganjil_genap',
-        'IPK', 'IPS'
+        'IPK', 'IPS', 'cluster'
     ];
 
     public static function ganjil_genap()
