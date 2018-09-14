@@ -88,7 +88,7 @@
                                     <form method="POST" class="is-inline-block" action="{{ route('angkatan.delete', $angkatan) }}">
                                         @csrf
                                         {{ method_field('DELETE') }}
-                                        <button class="button is-danger">
+                                        <button {{ $angkatan->mahasiswas_count > 0 ? 'disabled' : '' }} class="button is-danger">
                                             <span class="icon">
                                                 <i class="fa fa-trash"></i>
                                             </span>

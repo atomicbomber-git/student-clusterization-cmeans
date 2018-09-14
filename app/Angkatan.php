@@ -9,4 +9,9 @@ class Angkatan extends Model
     public $fillable = [
         'tahun'
     ];
+
+    public function mahasiswas()
+    {
+        return $this->hasMany(Mahasiswa::class);
+    }
 }

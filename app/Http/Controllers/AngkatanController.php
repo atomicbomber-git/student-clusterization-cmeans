@@ -13,6 +13,7 @@ class AngkatanController extends Controller
         $angkatans = Angkatan::query()
             ->select('id', 'tahun')
             ->orderBy('tahun', 'DESC')
+            ->withCount('mahasiswas')
             ->get();
 
         return view('angkatan.index', compact('angkatans'));
