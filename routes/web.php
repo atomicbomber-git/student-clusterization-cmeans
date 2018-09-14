@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    // return view('welcome');
-});
+Route::redirect('/', '/tahun_ajaran/index');
 
 Route::group(['prefix' => '/tahun_ajaran', 'as' => 'tahun_ajaran.'], function() {
     Route::get('/index', 'TahunAjaranController@index')->name('index');
