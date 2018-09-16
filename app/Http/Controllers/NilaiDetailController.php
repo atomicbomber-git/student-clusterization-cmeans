@@ -16,7 +16,7 @@ class NilaiDetailController extends Controller
     public function index(TahunAjaran $tahun_ajaran, $ganjil_genap, Angkatan $angkatan)
     {
         $mahasiswas = DB::table('mahasiswas')
-            ->select('nilais.id AS nilai_id', 'NIM', 'IPK', 'IPS', 'cluster')
+            ->select('nilais.id AS nilai_id', 'nama', 'NIM', 'IPK', 'IPS', 'cluster')
             ->join('nilais', 'nilais.mahasiswa_id', '=', 'mahasiswas.id')
             ->where('angkatan_id', $angkatan->id)
             ->where('tahun_ajaran_id', $tahun_ajaran->id)
@@ -80,8 +80,8 @@ class NilaiDetailController extends Controller
     {
         $data = $this->validate(request(), [
             'nilais' => ['required', 'array'],
-            'nilais.*.IPK' => ['nullable', 'min:0', 'max:4'],
-            'nilais.*.IPS' => ['nullable', 'min:0', 'max:4']
+            'nilais.*.IPK' => ['nullable', 'gte:0', 'lte:4'],
+            'nilais.*.IPS' => ['nullable', 'gte:0', 'lte:4']
         ]);
         
         DB::transaction(function() use($data) {

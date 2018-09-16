@@ -47,6 +47,14 @@
                         </div>
 
                         <div class="field">
+                            <label for="nama" class="label"> Nama: </label>
+                            <input value="{{ old('nama') }}" type="text" name="nama" class="input {{ $errors->first("nama", "is-danger") }}">
+                            @if($errors->has("nama"))
+                            <p class="help is-danger"> {{ $errors->first("nama") }} </p>
+                            @endif
+                        </div>
+
+                        <div class="field">
                             <label for="angkatan_id" class="label"> Angkatan: </label>
                             <div class="select is-block">
                                 <select name="angkatan_id" id="angkatan_id" style="width: 100%">
@@ -89,6 +97,7 @@
                             <tr>
                                 <th> # </th>
                                 <th> NIM </th>
+                                <th> Nama </th>
                                 <th> Angkatan </th>
                                 <th> Aksi </th>
                             </tr>
@@ -98,6 +107,7 @@
                             <tr>
                                 <td> {{ $mahasiswas->firstItem() + $loop->index }}. </td>
                                 <td> {{ $mahasiswa->NIM }} </td>
+                                <td> {{ $mahasiswa->nama }} </td>
                                 <td> {{ $mahasiswa->angkatan }} </td>
                                 <td>
                                     <form method="POST" class="is-inline-block" action="{{ route('mahasiswa.delete', $mahasiswa->id) }}">

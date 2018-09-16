@@ -15,9 +15,10 @@ class MahasiswaController extends Controller
     public function index()
     {
         $mahasiswas = DB::table('mahasiswas')
-            ->select('mahasiswas.id', 'NIM', 'angkatans.tahun AS angkatan')
+            ->select('mahasiswas.id', 'NIM', 'angkatans.tahun AS angkatan', 'nama')
             ->join('angkatans', 'angkatans.id', '=', 'mahasiswas.angkatan_id')
             ->orderBy('angkatans.tahun', 'DESC')
+            ->orderBy('mahasiswas.nama')
             ->paginate(25);
 
         $mahasiswa_nilai_counts = Mahasiswa::query()
@@ -40,7 +41,8 @@ class MahasiswaController extends Controller
         
         $data = $this->validate(request(), [
             'NIM' => ['required', 'unique:mahasiswas'],
-            'angkatan_id' => ['required', Rule::in($angkatan_ids)]
+            'angkatan_id' => ['required', Rule::in($angkatan_ids)],
+            'nama' => ['required', 'string']
         ]);
 
         $tahun_angkatan = Angkatan::find($data['angkatan_id'])->tahun;
@@ -82,7 +84,8 @@ class MahasiswaController extends Controller
         
         $data = $this->validate(request(), [
             'NIM' => ['required', Rule::unique('mahasiswas')->ignore($mahasiswa->id)],
-            'angkatan_id' => ['required', Rule::in($angkatan_ids)]
+            'angkatan_id' => ['required', Rule::in($angkatan_ids)],
+            'nama' => ['required', 'string']
         ]);
 
         $mahasiswa->update($data);

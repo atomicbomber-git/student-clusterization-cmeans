@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Mahasiswa extends Model
 {
     public $fillable = [
-        'NIM', 'angkatan_id'
+        'nama', 'NIM', 'angkatan_id'
     ];
 
     public function angkatan()

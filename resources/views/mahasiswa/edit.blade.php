@@ -35,14 +35,22 @@
                 </h1>
             </div>
             <div class="card-content">
-                    <form method="POST" action="{{ route('mahasiswa.update', $mahasiswa) }}">
-                            @csrf
+                <form method="POST" action="{{ route('mahasiswa.update', $mahasiswa) }}">
+                        @csrf
     
                     <div class="field">
                         <label for="NIM" class="label"> NIM: </label>
                         <input value="{{ old('NIM', $mahasiswa->NIM) }}" type="text" name="NIM" class="input {{ $errors->first("NIM", "is-danger") }}">
                         @if($errors->has("NIM"))
                         <p class="help is-danger"> {{ $errors->first("NIM") }} </p>
+                        @endif
+                    </div>
+
+                    <div class="field">
+                        <label for="nama" class="label"> Nama: </label>
+                        <input value="{{ old('nama', $mahasiswa->nama) }}" type="text" name="nama" class="input {{ $errors->first("nama", "is-danger") }}">
+                        @if($errors->has("nama"))
+                        <p class="help is-danger"> {{ $errors->first("nama") }} </p>
                         @endif
                     </div>
 
