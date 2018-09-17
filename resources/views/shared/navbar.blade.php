@@ -16,6 +16,20 @@
             <li class="{{ Route::is("nilai.*") ? 'is-active' : '' }}">
                 <a href="{{ route("nilai.index") }}"> Nilai </a>
             </li>
+
+            @auth
+            <li>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button class="button is-small is-danger">
+                        <span> Log Out </span>
+                        <span class="icon">
+                            <i class="fa fa-sign-out"></i>
+                        </span>
+                    </button>
+                </form>
+            </li>
+            @endauth
         </ul>
     </div>
 </div>
