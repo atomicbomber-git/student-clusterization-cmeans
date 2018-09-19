@@ -21,12 +21,6 @@ class MahasiswaController extends Controller
             ->orderBy('mahasiswas.nama')
             ->paginate(25);
 
-        $mahasiswa_nilai_counts = Mahasiswa::query()
-            ->whereIn('id', $mahasiswas->pluck('id'))
-            ->withCount('nilais')
-            ->get()
-            ->mapWithKeys(function ($mahasiswa) { return [$mahasiswa->id => $mahasiswa->nilais_count]; });
-
         $angkatans = Angkatan::query()
             ->select('id', 'tahun')
             ->orderBy('tahun', 'DESC')
@@ -96,7 +90,13 @@ class MahasiswaController extends Controller
 
     public function delete(Mahasiswa $mahasiswa)
     {
-        $mahasiswa->delete();
+        DB::transaction(function() use($mahasiswa) {
+            Nilai::where('mahasiswa_id', $mahasiswa->id)
+                ->delete();
+
+            $mahasiswa->delete();
+        });
+
         return redirect()
             ->back()
             ->with('message.success', __('messages.delete.success'));
