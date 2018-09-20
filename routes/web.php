@@ -13,6 +13,8 @@
 
 Auth::routes();
 
+Route::redirect('/', '/mahasiswa/index');
+
 Route::middleware(['auth'])->group(function() {
     Route::group(['prefix' => '/tahun_ajaran', 'as' => 'tahun_ajaran.'], function() {
         Route::get('/index', 'TahunAjaranController@index')->name('index');
