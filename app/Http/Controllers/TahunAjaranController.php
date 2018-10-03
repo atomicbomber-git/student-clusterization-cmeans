@@ -15,7 +15,6 @@ class TahunAjaranController extends Controller
     {
         $tahun_ajarans = TahunAjaran::query()
             ->select('id', 'tahun_mulai', 'tahun_selesai')
-            ->withCount('nilais')
             ->orderBy('tahun_selesai', 'DESC')
             ->get();
 
