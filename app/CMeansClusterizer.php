@@ -86,7 +86,7 @@ class CMeansClusterizer
 
         $result = [];
         foreach ($this->membership_degrees as $key => $membership_degree) {
-            $result[$key] = array_search(max($membership_degree), $membership_degree);
+            $result[$key] = array_search(max($membership_degree), $membership_degree) + 1;
         }
 
         return $result;
