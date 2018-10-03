@@ -91,6 +91,9 @@ class TahunAjaranController extends Controller
 
     public function delete(TahunAjaran $tahun_ajaran)
     {
+        Nilai::where('tahun_ajaran_id', $tahun_ajaran->id)
+            ->delete();
+
         $tahun_ajaran->delete();
         return redirect()
             ->back()
