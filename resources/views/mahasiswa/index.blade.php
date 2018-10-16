@@ -107,7 +107,7 @@
                             <tr>
                                 <td> {{ $mahasiswas->firstItem() + $loop->index }}. </td>
                                 <td> {{ $mahasiswa->NIM }} </td>
-                                <td> {{ $mahasiswa->nama }} </td>
+                                <td> {{ $mahasiswa->name }} </td>
                                 <td> {{ $mahasiswa->angkatan }} </td>
                                 <td>
                                     <form method="POST" class="is-inline-block" action="{{ route('mahasiswa.delete', $mahasiswa->id) }}">

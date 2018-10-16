@@ -16,7 +16,8 @@ class NilaiDetailController extends Controller
     public function index(TahunAjaran $tahun_ajaran, $ganjil_genap, Angkatan $angkatan)
     {
         $mahasiswas = DB::table('mahasiswas')
-            ->select('nilais.id AS nilai_id', 'nama', 'NIM', 'IPK', 'IPS', 'cluster')
+            ->select('nilais.id AS nilai_id', 'users.name', 'NIM', 'IPK', 'IPS', 'cluster')
+            ->join('users', 'users.id', '=', 'mahasiswas.user_id')
             ->join('nilais', 'nilais.mahasiswa_id', '=', 'mahasiswas.id')
             ->where('angkatan_id', $angkatan->id)
             ->where('tahun_ajaran_id', $tahun_ajaran->id)

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
+use App\User;
 use App\Mahasiswa;
 use App\Angkatan;
 use App\TahunAjaran;
@@ -15,10 +16,11 @@ class MahasiswaController extends Controller
     public function index()
     {
         $mahasiswas = DB::table('mahasiswas')
-            ->select('mahasiswas.id', 'NIM', 'angkatans.tahun AS angkatan', 'nama')
+            ->select('mahasiswas.id', 'mahasiswas.NIM', 'angkatans.tahun AS angkatan', 'users.name')
+            ->join('users', 'users.id', '=', 'mahasiswas.user_id')
             ->join('angkatans', 'angkatans.id', '=', 'mahasiswas.angkatan_id')
             ->orderBy('angkatans.tahun', 'DESC')
-            ->orderBy('mahasiswas.nama')
+            ->orderBy('users.name')
             ->paginate(25);
 
         $angkatans = Angkatan::query()
@@ -47,8 +49,19 @@ class MahasiswaController extends Controller
             ->pluck('id');
         
         DB::transaction(function() use($data, $tahun_ajaran_ids) {
+            
+            $user = User::create([
+                'name' => $data['nama'],
+                'username' => $data['NIM'],
+                'password' => bcrypt($data['NIM']),
+                'type' => 'mahasiswa'
+            ]);
 
-            $mahasiswa = Mahasiswa::create($data);
+            $mahasiswa = Mahasiswa::create([
+                'user_id' => $user->id,
+                'angkatan_id' => $data['angkatan_id'],
+                'NIM' => $data['NIM'],
+            ]);
 
             foreach ($tahun_ajaran_ids as $tahun_ajaran_id) {
                 foreach (Nilai::ganjil_genap() as $ganjil_genap) {

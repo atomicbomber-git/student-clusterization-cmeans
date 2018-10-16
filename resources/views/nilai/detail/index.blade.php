@@ -47,7 +47,7 @@
                             <tr>
                                 <th> # </th>
                                 <th> <a href="{{ $sortable_url('NIM') }}"> NIM </a></th>
-                                <th> <a href="{{ $sortable_url('nama') }}"> Nama </a></th>
+                                <th> <a href="{{ $sortable_url('name') }}"> Nama </a></th>
                                 <th> <a href="{{ $sortable_url('IPK') }}"> IPK </a> </th>
                                 <th> <a href="{{ $sortable_url('IPS') }}"> IPS </a> </th>
                                 <th> <a href="{{ $sortable_url('cluster') }}"> Cluster </a> </th>
@@ -58,7 +58,7 @@
                             <tr>
                                 <td> {{ $loop->iteration }}. </td>
                                 <td> {{ $mahasiswa->NIM }} </td>
-                                <td> {{ $mahasiswa->nama }} </td>
+                                <td> {{ $mahasiswa->name }} </td>
                                 <td>
                                     <input 
                                         name="nilais[{{$mahasiswa->nilai_id}}][IPK]"
