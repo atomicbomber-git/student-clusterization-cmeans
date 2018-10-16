@@ -15,7 +15,6 @@ class TahunAjaranController extends Controller
     {
         $tahun_ajarans = TahunAjaran::query()
             ->select('id', 'tahun_mulai', 'tahun_selesai')
-            ->withCount('nilais')
             ->orderBy('tahun_selesai', 'DESC')
             ->get();
 
@@ -92,6 +91,9 @@ class TahunAjaranController extends Controller
 
     public function delete(TahunAjaran $tahun_ajaran)
     {
+        Nilai::where('tahun_ajaran_id', $tahun_ajaran->id)
+            ->delete();
+
         $tahun_ajaran->delete();
         return redirect()
             ->back()

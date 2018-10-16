@@ -96,7 +96,7 @@
                                     <form method="POST" class="is-inline-block" action="{{ route('tahun_ajaran.delete', $tahun_ajaran) }}">
                                         @csrf
                                         {{ method_field('DELETE') }}
-                                        <button {{ $tahun_ajaran->nilais_count !== 0 ? 'disabled' : '' }} class="button is-danger">
+                                        <button class="button is-danger">
                                             <span class="icon">
                                                 <i class="fa fa-trash"></i>
                                             </span>
