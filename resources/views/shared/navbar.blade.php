@@ -1,6 +1,7 @@
 <div class="container">
     <div class="tabs">
         <ul>
+            @can('act-as-administrator')
             <li class="{{ Route::is("tahun_ajaran.*") ? 'is-active' : '' }}">
                 <a href="{{ route('tahun_ajaran.index') }}"> Tahun Ajaran </a>
             </li>
@@ -16,6 +17,13 @@
             <li class="{{ Route::is("nilai.*") ? 'is-active' : '' }}">
                 <a href="{{ route("nilai.index") }}"> Nilai </a>
             </li>
+            @endcan
+
+            @can('act-as-mahasiswa')
+            <li class="{{ Route::is("client.*") ? 'is-active' : '' }}">
+                <a href="{{ route('client.cluster.index') }}"> Kluster </a>
+            </li>
+            @endcan
 
             @auth
             <li>

@@ -9,11 +9,13 @@
 
 <div class="section">
     <div class="container">
-            <nav class="breadcrumb box" aria-label="breadcrumbs">
-                <ul>
-                    <li class="is-active"> <a> Kelola Nilai </a> </li>
-                </ul>
-            </nav>
+        <nav class="breadcrumb box" aria-label="breadcrumbs">
+            <ul>
+                <li class="is-active"> <a> Kelola Nilai </a> </li>
+            </ul>
+        </nav>
+
+        @include('shared.account')
 
         <div class="card is-inline-block">
             <div class="card-header">

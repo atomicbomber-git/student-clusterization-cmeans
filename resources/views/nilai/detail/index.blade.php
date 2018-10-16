@@ -22,6 +22,8 @@
             </ul>
         </nav>
 
+        @include('shared.account')
+
         @if(session('message.success'))
         <article class="message is-success">
             <div class="message-body">

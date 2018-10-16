@@ -50,4 +50,8 @@ Route::middleware(['auth'])->group(function() {
             Route::post('/clusterize', 'NilaiDetailController@clusterize')->name('clusterize');
         });
     });
+
+    Route::group(['prefix' => '/client', 'as' => 'client.'], function() {
+        Route::get('/cluster/index', 'ClientClusterController@index')->name('cluster.index');
+    });
 });

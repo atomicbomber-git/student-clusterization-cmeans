@@ -22,7 +22,12 @@ class LoginController extends Controller
 
     public function redirectTo()
     {
-        return route('tahun_ajaran.index');
+        switch (auth()->user()->type) {
+            case 'administrator':
+            return route('tahun_ajaran.index');
+            case 'mahasiswa':
+            return route('client.cluster.index');
+        }
     }
 
     public function loggedOut()
