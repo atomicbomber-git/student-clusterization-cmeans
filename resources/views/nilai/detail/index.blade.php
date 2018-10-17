@@ -57,7 +57,7 @@
                         </thead>
                         <tbody>
                             @foreach ($mahasiswas as $mahasiswa)
-                            <tr>
+                            <tr {{ $mahasiswa->cluster == $lowest_average_cluster && !empty($mahasiswa->cluster) ? "class=has-text-danger" : '' }}>
                                 <td> {{ $loop->iteration }}. </td>
                                 <td> {{ $mahasiswa->NIM }} </td>
                                 <td> {{ $mahasiswa->name }} </td>

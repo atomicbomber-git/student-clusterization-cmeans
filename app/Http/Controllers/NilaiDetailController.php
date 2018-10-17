@@ -15,6 +15,20 @@ class NilaiDetailController extends Controller
 {
     public function index(TahunAjaran $tahun_ajaran, $ganjil_genap, Angkatan $angkatan)
     {
+        $averages = DB::table('mahasiswas')
+            ->select('cluster', DB::raw('AVG((nilais."IPK" + nilais."IPS") / 2) AS average'))
+            ->join('nilais', 'nilais.mahasiswa_id', '=', 'mahasiswas.id')
+            ->where('angkatan_id', $angkatan->id)
+            ->where('tahun_ajaran_id', $tahun_ajaran->id)
+            ->where('ganjil_genap', $ganjil_genap)
+            ->groupBy('nilais.cluster')
+            ->get()
+            ->mapWithKeys(function($record) {
+                return [$record->cluster => $record->average]; 
+            });
+
+        $lowest_average_cluster = array_search($averages->min(), $averages->toArray());
+
         $mahasiswas = DB::table('mahasiswas')
             ->select('nilais.id AS nilai_id', 'users.name', 'NIM', 'IPK', 'IPS', 'cluster')
             ->join('users', 'users.id', '=', 'mahasiswas.user_id')
@@ -72,7 +86,8 @@ class NilaiDetailController extends Controller
                 'ganjil_genap',
                 'angkatan',
                 'mahasiswas',
-                'sortable_url'
+                'sortable_url',
+                'lowest_average_cluster'
             )
         );
     }
