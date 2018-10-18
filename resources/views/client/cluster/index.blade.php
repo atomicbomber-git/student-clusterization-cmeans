@@ -42,7 +42,7 @@
                     </thead>
                     <tbody>
                         @foreach ($mahasiswa_clusters as $cluster)
-                        <tr>
+                        <tr {{ !empty($smallest_average_clusters[$cluster->tahun_ajaran_id.'-'.$cluster->ganjil_genap]) && $smallest_average_clusters[$cluster->tahun_ajaran_id.'-'.$cluster->ganjil_genap] == $cluster->cluster ? "class=has-text-danger" : "" }}>
                             <td> {{ $cluster->tahun_mulai }}-{{ $cluster->tahun_selesai }} </td>
                             <td> {{ $cluster->ganjil_genap }} </td>
                             <td> {{ $cluster->IPK ?? '-' }} </td>
