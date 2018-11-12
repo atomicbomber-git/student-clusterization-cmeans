@@ -38,6 +38,7 @@
                             <th> IPK </th>
                             <th> IPS </th>
                             <th> Kluster </th>
+                            <th> Rata-Rata Kluster </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,6 +49,9 @@
                             <td> {{ $cluster->IPK ?? '-' }} </td>
                             <td> {{ $cluster->IPS ?? '-' }} </td>
                             <td> {{ $cluster->cluster ?? '-' }} </td>
+                            <td>
+                                {{ number_format($cluster_averages[$cluster->tahun_ajaran_id][auth()->user()->mahasiswa->angkatan_id][$cluster->ganjil_genap][$cluster->cluster][0]->avg, 2) }}
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
