@@ -53,6 +53,7 @@ class ClientClusterController extends Controller
                 INNER JOIN mahasiswas ON mahasiswas.id = nilais.mahasiswa_id
                 WHERE mahasiswas.angkatan_id = :id
                     AND nilais.tahun_ajaran_id IN ($clusters)
+                    AND cluster IS NOT NULL
                 GROUP BY mahasiswas.angkatan_id, nilais.tahun_ajaran_id, nilais.ganjil_genap, nilais.cluster
         ", [
             'id' => auth()->user()->mahasiswa->angkatan_id
@@ -61,6 +62,8 @@ class ClientClusterController extends Controller
         $cluster_averages = collect($cluster_averages)->groupBy([
             'tahun_ajaran_id', "angkatan_id", "ganjil_genap", "cluster"
         ]);
+
+        // return $cluster_averages;
 
         return view('client.cluster.index', compact('mahasiswa_clusters', 'smallest_average_clusters', 'cluster_averages'));
     }
