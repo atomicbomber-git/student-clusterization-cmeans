@@ -53,6 +53,7 @@
                                 <th> <a href="{{ $sortable_url('IPK') }}"> IPK </a> </th>
                                 <th> <a href="{{ $sortable_url('IPS') }}"> IPS </a> </th>
                                 <th> <a href="{{ $sortable_url('cluster') }}"> Cluster </a> </th>
+                                <th> Rata-Rata Cluster </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -88,6 +89,7 @@
                                     @endif
                                 </td>
                                 <td> {{ $mahasiswa->cluster ?? '-' }} </td>
+                                <td> {{ number_format($averages[$mahasiswa->cluster], 2) ?? '-' }} </td>
                             </tr>
                             @endforeach
                         </tbody>

@@ -87,6 +87,7 @@ class NilaiDetailController extends Controller
                 'angkatan',
                 'mahasiswas',
                 'sortable_url',
+                'averages',
                 'lowest_average_cluster'
             )
         );
