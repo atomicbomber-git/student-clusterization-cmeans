@@ -122,6 +122,11 @@ class NilaiDetailController extends Controller
         $nilais = Mahasiswa::query()
             ->select('id', 'NIM')
             ->where('angkatan_id', $angkatan->id)
+            ->whereHas('nilais', function($query) use($tahun_ajaran, $ganjil_genap) {
+                $query
+                    ->where('tahun_ajaran_id', $tahun_ajaran->id)
+                    ->where('ganjil_genap', $ganjil_genap);
+            })
             ->with(['nilai' => function ($query) use($tahun_ajaran, $ganjil_genap) {
                 $query
                     ->select('id', 'mahasiswa_id', 'IPK', 'IPS')
@@ -131,9 +136,9 @@ class NilaiDetailController extends Controller
             ->get()
             ->pluck('nilai')
             ->mapWithKeys(function ($nilai) {
-                return [$nilai->id => [
-                    'IPK' => $nilai->IPK,
-                    'IPS' => $nilai->IPS
+                return [$nilai["id"] => [
+                    'IPK' => $nilai["IPK"],
+                    'IPS' => $nilai["IPS"]
                 ]];
             });
 
@@ -145,6 +150,7 @@ class NilaiDetailController extends Controller
         );
 
         $result = $clusterizer->clusterize();
+
         DB::transaction(function() use($result) {
             foreach ($result as $nilai_id => $cluster) {
                 Nilai::where('id', $nilai_id)

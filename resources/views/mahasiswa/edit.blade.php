@@ -48,7 +48,7 @@
 
                     <div class="field">
                         <label for="nama" class="label"> Nama: </label>
-                        <input value="{{ old('nama', $mahasiswa->nama) }}" type="text" name="nama" class="input {{ $errors->first("nama", "is-danger") }}">
+                        <input value="{{ old('nama', $mahasiswa->user->name) }}" type="text" name="nama" class="input {{ $errors->first("nama", "is-danger") }}">
                         @if($errors->has("nama"))
                         <p class="help is-danger"> {{ $errors->first("nama") }} </p>
                         @endif

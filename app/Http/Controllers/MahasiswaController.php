@@ -95,7 +95,11 @@ class MahasiswaController extends Controller
             'nama' => ['required', 'string']
         ]);
 
-        $mahasiswa->update($data);
+        $mahasiswa->update(collect($data)->only('NIM', 'angkatan_id')->toArray());
+        
+        User::where('id', $mahasiswa->user_id)
+            ->update(['name' => $data['nama']]);
+
         return redirect()
             ->back()
             ->with('message.success', __('messages.update.success'));

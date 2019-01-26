@@ -10,6 +10,11 @@ class Mahasiswa extends Model
         'nama', 'NIM', 'angkatan_id', 'user_id'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function angkatan()
     {
         return $this->belongsTo(Angkatan::class);

@@ -19,12 +19,12 @@ class FromExcelSeeder extends Seeder
     {
 
         // Seed admin
-        // User::create([
-        //     'username' => 'admin',
-        //     'name' => 'Administrator',
-        //     'password' => bcrypt('admin'),
-        //     'type' => 'administrator'
-        // ]);
+        User::create([
+            'username' => 'admin',
+            'name' => 'Administrator',
+            'password' => bcrypt('admin'),
+            'type' => 'administrator'
+        ]);
 
         $data = (new DataImport)->toCollection('data.xls')->first();
         
@@ -33,6 +33,7 @@ class FromExcelSeeder extends Seeder
             'nama' => 1,
             'tahun_ajaran' => 2,
             'semester' => 3,
+            'perkuliahan' => 4,
             'ips' => 5,
             'ipk' => 6
         ];
@@ -97,6 +98,10 @@ class FromExcelSeeder extends Seeder
         $unique_students = $unique_students->keyBy($columns['NIM']);
 
         foreach ($data as $row) {
+            if ($row[$columns['perkuliahan']] == 'Pendek') {
+                continue;
+            }
+
             Nilai::create([
                 'mahasiswa_id' => $unique_students[$row[$columns['NIM']]]["mahasiswa_id"],
                 'ganjil_genap' => strtoupper($row[$columns['semester']]),
