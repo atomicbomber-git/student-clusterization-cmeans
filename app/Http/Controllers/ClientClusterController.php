@@ -10,6 +10,7 @@ class ClientClusterController extends Controller
     public function index()
     {
         $mahasiswa = auth()->user()->mahasiswa;
+        // return $mahasiswa;
 
         $smallest_average_clusters = DB::select('
             SELECT tahun_ajaran_id, ganjil_genap, FIRST_VALUE(cluster) OVER (PARTITION BY tahun_ajaran_id ORDER BY average) AS smallest_average_cluster
@@ -36,7 +37,7 @@ class ClientClusterController extends Controller
                     tahun_selesai DESC,
                     ganjil_genap DESC
         ", [$mahasiswa->id]);
-        
+
         // Get cluster averages
         $clusters = collect($mahasiswa_clusters)->filter(function($record) {
             return !empty($record->cluster);
@@ -44,26 +45,26 @@ class ClientClusterController extends Controller
 
         $clusters = implode(", ", $clusters->pluck('tahun_ajaran_id')->toArray());
 
-        $cluster_averages =  DB::select("
-            SELECT
-                mahasiswas.angkatan_id, nilais.tahun_ajaran_id, nilais.ganjil_genap, nilais.cluster,
-                AVG((\"IPK\" + \"IPS\") / 2)
+        if (!empty($clusters)) {
+            $cluster_averages =  DB::select("
+                SELECT
+                    mahasiswas.angkatan_id, nilais.tahun_ajaran_id, nilais.ganjil_genap, nilais.cluster,
+                    AVG((\"IPK\" + \"IPS\") / 2)
 
-                FROM nilais
-                INNER JOIN mahasiswas ON mahasiswas.id = nilais.mahasiswa_id
-                WHERE mahasiswas.angkatan_id = :id
-                    AND nilais.tahun_ajaran_id IN ($clusters)
-                    AND cluster IS NOT NULL
-                GROUP BY mahasiswas.angkatan_id, nilais.tahun_ajaran_id, nilais.ganjil_genap, nilais.cluster
-        ", [
-            'id' => auth()->user()->mahasiswa->angkatan_id
-        ]);
+                    FROM nilais
+                    INNER JOIN mahasiswas ON mahasiswas.id = nilais.mahasiswa_id
+                    WHERE mahasiswas.angkatan_id = :id
+                        AND nilais.tahun_ajaran_id IN ($clusters)
+                        AND cluster IS NOT NULL
+                    GROUP BY mahasiswas.angkatan_id, nilais.tahun_ajaran_id, nilais.ganjil_genap, nilais.cluster
+            ", [
+                'id' => auth()->user()->mahasiswa->angkatan_id
+            ]);
 
-        $cluster_averages = collect($cluster_averages)->groupBy([
-            'tahun_ajaran_id', "angkatan_id", "ganjil_genap", "cluster"
-        ]);
-
-        // return $cluster_averages;
+            $cluster_averages = collect($cluster_averages)->groupBy([
+                'tahun_ajaran_id', "angkatan_id", "ganjil_genap", "cluster"
+            ]);
+        }
 
         return view('client.cluster.index', compact('mahasiswa_clusters', 'smallest_average_clusters', 'cluster_averages'));
     }
