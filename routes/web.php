@@ -48,6 +48,7 @@ Route::middleware(['auth'])->group(function() {
             Route::get('/index', 'NilaiDetailController@index')->name('index');
             Route::post('/update', 'NilaiDetailController@update')->name('update');
             Route::post('/clusterize', 'NilaiDetailController@clusterize')->name('clusterize');
+            Route::post('/pci', 'NilaiDetailController@pci')->name('pci');
         });
     });
 

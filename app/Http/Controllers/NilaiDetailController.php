@@ -13,6 +13,9 @@ use App\CMeansClusterizer;
 
 class NilaiDetailController extends Controller
 {
+    const N_ITERATIONS = 1000;
+    const FUZZINESS = 10;
+
     public function index(TahunAjaran $tahun_ajaran, $ganjil_genap, Angkatan $angkatan)
     {
         $averages = DB::table('mahasiswas')
@@ -143,11 +146,16 @@ class NilaiDetailController extends Controller
         $clusterizer = new CMeansClusterizer(
             $nilais->toArray(),
             $data['n_clusters'],
-            1000,
-            5
+            self::N_ITERATIONS,
+            self::FUZZINESS
         );
 
-        $result = $clusterizer->clusterize();
+        $membership_degrees = $clusterizer->clusterize();
+        
+        $result = [];
+        foreach ($membership_degrees as $key => $membership_degree) {
+            $result[$key] = array_search(max($membership_degree), $membership_degree) + 1;
+        }
 
         DB::transaction(function () use ($result) {
             foreach ($result as $nilai_id => $cluster) {
@@ -159,5 +167,72 @@ class NilaiDetailController extends Controller
         return redirect()
             ->route('nilai.detail.index', [$tahun_ajaran, $ganjil_genap, $angkatan])
             ->with('message.success', __('messages.update.success'));
+    }
+
+    public function pci(TahunAjaran $tahun_ajaran, $ganjil_genap, Angkatan $angkatan)
+    {
+        $data = $this->validate(request(), [
+            'n_clusters_pci' => 'numeric|gte:2'
+        ]);
+
+        $nilais = Mahasiswa::query()
+            ->select('id', 'NIM')
+            ->where('angkatan_id', $angkatan->id)
+            ->whereHas('nilais', function ($query) use ($tahun_ajaran, $ganjil_genap) {
+                $query
+                    ->where('tahun_ajaran_id', $tahun_ajaran->id)
+                    ->where('ganjil_genap', $ganjil_genap);
+            })
+            ->with(['nilai' => function ($query) use ($tahun_ajaran, $ganjil_genap) {
+                $query
+                    ->select('id', 'mahasiswa_id', 'IPK', 'IPS')
+                    ->where('tahun_ajaran_id', $tahun_ajaran->id)
+                    ->where('ganjil_genap', $ganjil_genap);
+            }])
+            ->get()
+            ->pluck('nilai')
+            ->mapWithKeys(function ($nilai) {
+                return [$nilai["id"] => [
+                    'IPK' => $nilai["IPK"],
+                    'IPS' => $nilai["IPS"]
+                ]];
+            });
+
+        $clusterizer = new CMeansClusterizer(
+            $nilais->toArray(),
+            $data['n_clusters_pci'],
+            self::N_ITERATIONS,
+            self::FUZZINESS
+        );
+
+        $membership_degrees = collect($clusterizer->clusterize());
+
+        $mahasiswas = DB::table('mahasiswas')
+            ->select('nilais.id AS nilai_id', 'users.name', 'NIM', 'IPK', 'IPS', 'cluster')
+            ->join('users', 'users.id', '=', 'mahasiswas.user_id')
+            ->join('nilais', 'nilais.mahasiswa_id', '=', 'mahasiswas.id')
+            ->where('angkatan_id', $angkatan->id)
+            ->where('tahun_ajaran_id', $tahun_ajaran->id)
+            ->where('ganjil_genap', $ganjil_genap)
+
+            ->when(request('sort'), function ($query) {
+                if (request('order') !== 'ASC' || request('order') !== 'DESC') {
+                    $order = 'ASC';
+                }
+                $order = request('order');
+                
+                $query->orderBy(
+                    request('sort'),
+                    $order
+                );
+            })
+            ->get();
+
+        $mahasiswas = $mahasiswas->keyBy('nilai_id');
+    
+        return view('nilai.detail.pci', compact(
+            'mahasiswas', 'membership_degrees', 'tahun_ajaran',
+            'ganjil_genap', 'angkatan'
+        ));
     }
 }

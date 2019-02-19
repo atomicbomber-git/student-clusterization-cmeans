@@ -82,11 +82,6 @@ class CMeansClusterizer
             $this->update_membership_degrees();
         }
 
-        $result = [];
-        foreach ($this->membership_degrees as $key => $membership_degree) {
-            $result[$key] = array_search(max($membership_degree), $membership_degree) + 1;
-        }
-
-        return $result;
+        return $this->membership_degrees;
     }
 }

@@ -107,6 +107,25 @@
                                     </button>
                                 </div>
                             </div>
+                            <div class="level-item">
+                                <div class="field has-addons">
+                                    <div class="control">
+                                        <input placeholder="Jumlah Cluster" form="pci" value="{{ old('n_clusters_pci') }}" type="text" name="n_clusters_pci" class="input {{ $errors->first("n_clusters_pci", "is-danger") }}">
+                                        @if($errors->has("n_clusters_pci"))
+                                        <p class="help is-danger"> {{ $errors->first("n_clusters_pci") }} </p>
+                                        @endif
+                                    </div>
+        
+                                    <div class="control">
+                                        <button form="pci" class="button is-dark">
+                                            <span> Hitung Nilai PCI </span>
+                                            <span class="icon">
+                                                <i class="fa fa-calculator"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="level-right ml-10">
@@ -134,6 +153,10 @@
                 </form>
 
                 <form id="clusterize" method="POST" action="{{ route('nilai.detail.clusterize', [$tahun_ajaran, $ganjil_genap, $angkatan]) }}">
+                    @csrf
+                </form>
+
+                <form id="pci" method="POST" action="{{ route('nilai.detail.pci', [$tahun_ajaran, $ganjil_genap, $angkatan]) }}">
                     @csrf
                 </form>
             </div>
