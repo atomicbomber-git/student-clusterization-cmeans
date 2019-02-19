@@ -26,14 +26,12 @@ class CMeansClusterizer
                 $this->membership_degrees[$key][$i] = rand(0, 100) / 100;
             }
         }
-
     }
 
     private function compute_centroids()
     {
         for ($i = 0; $i < $this->n_clusters; $i++) {
             foreach ($this->features as $feature) {
-
                 $num = 0;
                 $den = 0;
 
@@ -62,14 +60,14 @@ class CMeansClusterizer
     {
         foreach ($this->membership_degrees as $key => $membership_degree) {
             for ($i = 0; $i < $this->n_clusters; $i++) {
-                
                 $total = 0.0;
 
                 for ($j = 0; $j < $this->n_clusters; $j++) {
                     $total += pow(
                         $this->distance($this->data[$key], $this->centroids[$i], $this->features) /
-                        $this->distance($this->data[$key], $this->centroids[$j], $this->features)
-                    , 2.0 / ($this->fuzziness - 1.0));
+                        $this->distance($this->data[$key], $this->centroids[$j], $this->features),
+                        2.0 / ($this->fuzziness - 1.0)
+                    );
                 }
 
                 $this->membership_degrees[$key][$i] = 1.0 / $total;
