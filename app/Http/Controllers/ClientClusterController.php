@@ -24,7 +24,7 @@ class ClientClusterController extends Controller
 
         $smallest_average_clusters = collect($smallest_average_clusters)
             ->unique()
-            ->mapWithKeys(function($record) {
+            ->mapWithKeys(function ($record) {
                 return [$record->tahun_ajaran_id . '-' . $record->ganjil_genap => $record->smallest_average_cluster];
             });
 
@@ -39,7 +39,7 @@ class ClientClusterController extends Controller
         ", [$mahasiswa->id]);
 
         // Get cluster averages
-        $clusters = collect($mahasiswa_clusters)->filter(function($record) {
+        $clusters = collect($mahasiswa_clusters)->filter(function ($record) {
             return !empty($record->cluster);
         });
 

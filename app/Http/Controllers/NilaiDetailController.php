@@ -23,8 +23,8 @@ class NilaiDetailController extends Controller
             ->where('ganjil_genap', $ganjil_genap)
             ->groupBy('nilais.cluster')
             ->get()
-            ->mapWithKeys(function($record) {
-                return [$record->cluster => $record->average]; 
+            ->mapWithKeys(function ($record) {
+                return [$record->cluster => $record->average];
             });
 
         $lowest_average_cluster = array_search($averages->min(), $averages->toArray());
@@ -37,7 +37,7 @@ class NilaiDetailController extends Controller
             ->where('tahun_ajaran_id', $tahun_ajaran->id)
             ->where('ganjil_genap', $ganjil_genap)
 
-            ->when(request('sort'), function($query) {
+            ->when(request('sort'), function ($query) {
                 if (request('order') !== 'ASC' || request('order') !== 'DESC') {
                     $order = 'ASC';
                 }
@@ -66,8 +66,7 @@ class NilaiDetailController extends Controller
                         $sort = $attribute;
                         $order = 'ASC';
                 }
-            }
-            else {
+            } else {
                 $sort = $attribute;
                 $order = 'ASC';
             }
@@ -76,7 +75,6 @@ class NilaiDetailController extends Controller
                 'sort' => $sort,
                 'order' => $order
             ]);
-
         };
 
         return view(
@@ -101,11 +99,11 @@ class NilaiDetailController extends Controller
             'nilais.*.IPS' => ['nullable', 'gte:0', 'lte:4']
         ]);
         
-        DB::transaction(function() use($data) {
+        DB::transaction(function () use ($data) {
             foreach ($data['nilais'] as $id => $nilai) {
                 Nilai
                     ::where('id', $id)
-                    ->update(array_merge($nilai, ['cluster' => NULL]));
+                    ->update(array_merge($nilai, ['cluster' => null]));
             }
         });
 
@@ -122,12 +120,12 @@ class NilaiDetailController extends Controller
         $nilais = Mahasiswa::query()
             ->select('id', 'NIM')
             ->where('angkatan_id', $angkatan->id)
-            ->whereHas('nilais', function($query) use($tahun_ajaran, $ganjil_genap) {
+            ->whereHas('nilais', function ($query) use ($tahun_ajaran, $ganjil_genap) {
                 $query
                     ->where('tahun_ajaran_id', $tahun_ajaran->id)
                     ->where('ganjil_genap', $ganjil_genap);
             })
-            ->with(['nilai' => function ($query) use($tahun_ajaran, $ganjil_genap) {
+            ->with(['nilai' => function ($query) use ($tahun_ajaran, $ganjil_genap) {
                 $query
                     ->select('id', 'mahasiswa_id', 'IPK', 'IPS')
                     ->where('tahun_ajaran_id', $tahun_ajaran->id)
@@ -151,7 +149,7 @@ class NilaiDetailController extends Controller
 
         $result = $clusterizer->clusterize();
 
-        DB::transaction(function() use($result) {
+        DB::transaction(function () use ($result) {
             foreach ($result as $nilai_id => $cluster) {
                 Nilai::where('id', $nilai_id)
                     ->update(['cluster' => $cluster]);

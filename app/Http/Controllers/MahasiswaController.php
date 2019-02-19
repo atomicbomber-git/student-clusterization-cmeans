@@ -48,8 +48,7 @@ class MahasiswaController extends Controller
             ->where('tahun_mulai', '>=', $tahun_angkatan)
             ->pluck('id');
         
-        DB::transaction(function() use($data, $tahun_ajaran_ids) {
-            
+        DB::transaction(function () use ($data, $tahun_ajaran_ids) {
             $user = User::create([
                 'name' => $data['nama'],
                 'username' => $data['NIM'],
@@ -107,7 +106,7 @@ class MahasiswaController extends Controller
 
     public function delete(Mahasiswa $mahasiswa)
     {
-        DB::transaction(function() use($mahasiswa) {
+        DB::transaction(function () use ($mahasiswa) {
             Nilai::where('mahasiswa_id', $mahasiswa->id)
                 ->delete();
 

@@ -36,7 +36,7 @@ class TahunAjaranController extends Controller
             ]
         ]);
 
-        DB::transaction(function () use($data) {
+        DB::transaction(function () use ($data) {
             $tahun_ajaran = TahunAjaran::create($data);
 
             $mahasiswa_ids = DB::table('mahasiswas')
