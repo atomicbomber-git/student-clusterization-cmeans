@@ -41,6 +41,38 @@
                     <span class="icon mr-1">
                         <i class="fa fa-calculator"></i>
                     </span>
+                    Pusat Cluster
+                </h1>
+            </div>
+
+            <div class="card-content">
+                <div style="overflow-x:auto">
+                    <table class="table is-bordered is-striped is-narrow is-hoverable block">
+                        <thead>
+                            <th> Pusat Cluster </th>
+                            <th> IPK </th>
+                            <th> IPS </th>
+                        </thead>
+                        <tbody>
+                            @foreach ($centroids as $centroid)
+                            <tr>
+                                <td> {{ $loop->iteration }}. </td>
+                                <td> {{ $centroid["IPK"] }} </td>
+                                <td> {{ $centroid["IPS"] }} </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card is-inline-block" style="margin-top: 4rem">
+            <div class="card-header">
+                <h1 class="card-header-title">
+                    <span class="icon mr-1">
+                        <i class="fa fa-calculator"></i>
+                    </span>
                     Nilai Derajat Keanggotaan Kluster
                     Nilai Mahasiswa Angkatan {{ $angkatan->tahun }} Tahun Ajaran {{ $tahun_ajaran->nama()  }} Semester {{ $ganjil_genap }}
                 </h1>
