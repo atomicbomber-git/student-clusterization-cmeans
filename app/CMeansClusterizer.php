@@ -23,7 +23,7 @@ class CMeansClusterizer
             $this->membership_degrees[$key] = [];
 
             for ($i = 0; $i < $this->n_clusters; ++$i) {
-                $this->membership_degrees[$key][$i] = rand(0, 100) / 100;
+                $this->membership_degrees[$key][$i] = rand(0, 10) / 10;
             }
         }
     }

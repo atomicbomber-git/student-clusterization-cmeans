@@ -1,11 +1,11 @@
-<section class="hero is-dark">
+<section class="hero is-info">
     <div class="hero-body">
         <div class="container">
         <h1 class="title">
-            Klusterisasi Mahasiswa dengan Algoritma <em> Fuzzy C-Means </em>
+            Pengklasteran Mahasiswa UNTAN Berdasarkan IPK
         </h1>
         <h2 class="subtitle">
-            Berdasarkan Nilai IPK dan IPS per Angkatan
+            Menggunakan Metode <em> Fuzzy C-Means </em>
         </h2>
         </div>
     </div>

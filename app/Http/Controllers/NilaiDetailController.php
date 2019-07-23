@@ -14,7 +14,7 @@ use App\CMeansClusterizer;
 class NilaiDetailController extends Controller
 {
     const N_ITERATIONS = 1000;
-    const FUZZINESS = 10;
+    const FUZZINESS = 2;
 
     public function index(TahunAjaran $tahun_ajaran, $ganjil_genap, Angkatan $angkatan)
     {
@@ -144,7 +144,7 @@ class NilaiDetailController extends Controller
             });
 
         $clusterizer = new CMeansClusterizer(
-            $nilais->toArray(),
+            $nilais->toArray(),  
             $data['n_clusters'],
             self::N_ITERATIONS,
             self::FUZZINESS
