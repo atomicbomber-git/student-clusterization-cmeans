@@ -45,7 +45,7 @@ class NilaiDetailController extends Controller
                     $order = 'ASC';
                 }
                 $order = request('order');
-                
+
                 $query->orderBy(
                     request('sort'),
                     $order
@@ -101,7 +101,7 @@ class NilaiDetailController extends Controller
             'nilais.*.IPK' => ['nullable', 'gte:0', 'lte:4'],
             'nilais.*.IPS' => ['nullable', 'gte:0', 'lte:4']
         ]);
-        
+
         DB::transaction(function () use ($data) {
             foreach ($data['nilais'] as $id => $nilai) {
                 Nilai
@@ -150,8 +150,8 @@ class NilaiDetailController extends Controller
             self::FUZZINESS
         );
 
-        $membership_degrees = $clusterizer->clusterize();
-        
+        $membership_degrees = $clusterizer->clusterize()["membership_degrees"];
+
         $result = [];
         foreach ($membership_degrees as $key => $membership_degree) {
             $result[$key] = array_search(max($membership_degree), $membership_degree) + 1;
@@ -205,7 +205,9 @@ class NilaiDetailController extends Controller
             self::FUZZINESS
         );
 
-        $membership_degrees = collect($clusterizer->clusterize());
+        $result = $clusterizer->clusterize();
+        $centroids = $result["centroids"];
+        $membership_degrees = collect($result["membership_degrees"]);
 
         $mahasiswas = DB::table('mahasiswas')
             ->select('nilais.id AS nilai_id', 'users.name', 'NIM', 'IPK', 'IPS', 'cluster')
@@ -220,7 +222,7 @@ class NilaiDetailController extends Controller
                     $order = 'ASC';
                 }
                 $order = request('order');
-                
+
                 $query->orderBy(
                     request('sort'),
                     $order
@@ -229,10 +231,10 @@ class NilaiDetailController extends Controller
             ->get();
 
         $mahasiswas = $mahasiswas->keyBy('nilai_id');
-    
+
         return view('nilai.detail.pci', compact(
             'mahasiswas', 'membership_degrees', 'tahun_ajaran',
-            'ganjil_genap', 'angkatan'
+            'ganjil_genap', 'angkatan', 'centroids',
         ));
     }
 }

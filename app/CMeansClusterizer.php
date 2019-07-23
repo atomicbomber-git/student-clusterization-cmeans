@@ -82,6 +82,6 @@ class CMeansClusterizer
             $this->update_membership_degrees();
         }
 
-        return $this->membership_degrees;
+        return ["centroids" => $this->centroids, "membership_degrees" => $this->membership_degrees];
     }
 }
