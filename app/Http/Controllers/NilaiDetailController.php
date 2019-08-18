@@ -234,7 +234,7 @@ class NilaiDetailController extends Controller
 
         return view('nilai.detail.pci', compact(
             'mahasiswas', 'membership_degrees', 'tahun_ajaran',
-            'ganjil_genap', 'angkatan', 'centroids',
+            'ganjil_genap', 'angkatan', 'centroids'
         ));
     }
 }
