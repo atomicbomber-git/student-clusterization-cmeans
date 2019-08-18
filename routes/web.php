@@ -11,6 +11,8 @@
 |
 */
 
+use App\Http\Controllers\MahasiswaClusterController;
+
 Auth::routes();
 
 Route::redirect('/', '/mahasiswa/index');
@@ -54,5 +56,9 @@ Route::middleware(['auth'])->group(function() {
 
     Route::group(['prefix' => '/client', 'as' => 'client.'], function() {
         Route::get('/cluster/index', 'ClientClusterController@index')->name('cluster.index');
+    });
+
+    Route::group(['prefix' => '/mahasiswa-cluster', 'as' => 'mahasiswa-cluster.'], function() {
+        Route::get('/index/{mahasiswa}', [MahasiswaClusterController::class, 'index'])->name('index');
     });
 });
