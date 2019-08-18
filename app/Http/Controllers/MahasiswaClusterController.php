@@ -14,6 +14,9 @@ class MahasiswaClusterController extends Controller
             "nilais.tahun_ajaran",
         ]);
 
+        $mahasiswa->nilais = $mahasiswa->nilais
+            ->sortByDesc("tahun_ajaran.tahun_mulai");
+
         return view("mahasiswa-cluster.index", compact("mahasiswa"));
     }
 }
