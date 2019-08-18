@@ -33,7 +33,7 @@ class NilaiDetailController extends Controller
         $lowest_average_cluster = array_search($averages->min(), $averages->toArray());
 
         $mahasiswas = DB::table('mahasiswas')
-            ->select('nilais.id AS nilai_id', 'users.name', 'NIM', 'IPK', 'IPS', 'cluster')
+            ->select('mahasiswas.id', 'nilais.id AS nilai_id', 'users.name', 'NIM', 'IPK', 'IPS', 'cluster')
             ->join('users', 'users.id', '=', 'mahasiswas.user_id')
             ->join('nilais', 'nilais.mahasiswa_id', '=', 'mahasiswas.id')
             ->where('angkatan_id', $angkatan->id)
@@ -52,7 +52,6 @@ class NilaiDetailController extends Controller
                 );
             })
             ->get();
-
 
         $sortable_url = function ($attribute) {
             if (request('sort') === $attribute) {

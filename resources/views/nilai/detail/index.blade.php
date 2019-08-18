@@ -61,11 +61,15 @@
                             <tr {{ $mahasiswa->cluster == $lowest_average_cluster && !empty($mahasiswa->cluster) ? "class=has-text-danger" : '' }}>
                                 <td> {{ $loop->iteration }}. </td>
                                 <td> {{ $mahasiswa->NIM }} </td>
-                                <td> {{ $mahasiswa->name }} </td>
                                 <td>
-                                    <input 
+                                    <a href="{{ route('mahasiswa-cluster.index', $mahasiswa->id) }}">
+                                        {{ $mahasiswa->name }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <input
                                         name="nilais[{{$mahasiswa->nilai_id}}][IPK]"
-                                        style="width: 5rem" type="number" 
+                                        style="width: 5rem" type="number"
                                         step="0.01"
                                         value="{{ old('nilais.'.$mahasiswa->nilai_id.'.IPK', $mahasiswa->IPK) }}"
                                         class="input is-small {{ $errors->has('nilais.'.$mahasiswa->nilai_id.'.IPK') ? 'is-danger' : '' }}">
@@ -76,7 +80,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <input 
+                                    <input
                                         name="nilais[{{$mahasiswa->nilai_id}}][IPS]"
                                         style="width: 5rem" type="number"
                                         step="0.01"
@@ -115,7 +119,7 @@
                                         <p class="help is-danger"> {{ $errors->first("n_clusters_pci") }} </p>
                                         @endif
                                     </div>
-        
+
                                     <div class="control">
                                         <button form="pci" class="button is-dark">
                                             <span> Hitung Nilai PCI </span>
@@ -137,7 +141,7 @@
                                         <p class="help is-danger"> {{ $errors->first("n_clusters") }} </p>
                                         @endif
                                     </div>
-        
+
                                     <div class="control">
                                         <button form="clusterize" class="button is-info">
                                             <span> Kelompokkan Kedalam Kluster </span>

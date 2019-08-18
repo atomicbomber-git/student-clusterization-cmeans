@@ -11,6 +11,11 @@ class Nilai extends Model
         'IPK', 'IPS', 'cluster'
     ];
 
+    public function tahun_ajaran()
+    {
+        return $this->belongsTo(TahunAjaran::class);
+    }
+
     public static function ganjil_genap()
     {
         return ['GANJIL', 'GENAP'];
