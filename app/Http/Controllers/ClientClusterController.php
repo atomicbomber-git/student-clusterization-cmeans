@@ -45,6 +45,7 @@ class ClientClusterController extends Controller
 
         $clusters = implode(", ", $clusters->pluck('tahun_ajaran_id')->toArray());
 
+        $cluster_averages = collect();
         if (!empty($clusters)) {
             $cluster_averages =  DB::select("
                 SELECT

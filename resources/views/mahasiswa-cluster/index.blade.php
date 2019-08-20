@@ -47,6 +47,7 @@
                             <tr>
                                 <th> # </th>
                                 <th> Tahun Ajaran </th>
+                                <th> Ganjil / Genap </th>
                                 <th> IPK </th>
                                 <th> IPS </th>
                                 <th> <em> Cluster </em> </th>
@@ -57,6 +58,7 @@
                             <tr>
                                 <td> {{ $loop->iteration }}. </td>
                                 <td> {{ $nilai->tahun_ajaran->nama() }} </td>
+                                <td> {{ $nilai->ganjil_genap }} </td>
                                 <td> {{ $nilai->IPK }} </td>
                                 <td> {{ $nilai->IPS }} </td>
                                 <td> {{ $nilai->cluster ?? "-" }} </td>
